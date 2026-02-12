@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+A modern, responsive Kanban board built with React + TypeScript + Tailwind CSS, demonstrating Optimistic UI updates, state rollback handling, and clean architecture.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features:
+ Mock Authentication
+ Simple login screen
+ Accepts any non-empty username
+ Login persists using localStorage
+ User remains logged in after page refresh
 
-Currently, two official plugins are available:
+ Kanban Board
+  3 Columns:
+   To Do
+   In Progress
+   Done
+ Add new tasks
+ Drag & Drop between columns
+ Delete tasks
+ Task count indicator per column
+ Fully responsive layout
+ Colorful modern UI with gradients
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ All task actions:
+  Add
+  Move
+  Delete
+Update the UI instantly before the mock API responds.
 
-## React Compiler
+For each action:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Store previous state:
+const previous = [...tasks];
 
-## Expanding the ESLint configuration
+Update UI immediately:
+setTasks(updatedTasks);
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Call mock API:
+await mockApiCall();
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+On failure:
+setTasks(previous);
+setError("Action failed");
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+src/
+ ├── api/
+ │     └── mockApi.ts
+ ├── components/
+ │     ├── Board.tsx
+ │     ├── Column.tsx
+ │     ├── TaskCard.tsx
+ │     ├── Login.tsx
+ │     └── Toast.tsx
+ ├── context/
+ │     └── BoardContext.tsx
+ ├── types/
+ │     └── types.ts
+ ├── App.tsx
+ └── main.tsx
