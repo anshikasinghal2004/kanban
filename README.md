@@ -57,3 +57,6 @@ src/
  │     └── types.ts
  ├── App.tsx
  └── main.tsx
+
+Deplyment Link:
+https://kanban-chi-ecru.vercel.app/
